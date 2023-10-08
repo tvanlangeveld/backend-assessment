@@ -1,4 +1,4 @@
-userDataBase = []
+userDataBase =  []
 
 module.exports = {
 
@@ -22,25 +22,30 @@ module.exports = {
     },
 
     submitInfo: (req, res) => {
-        console.log(req.body)
         userDataBase.push(req.body)
         res.status(200).send(userDataBase)
+
     },
-
-    deleteInfo: (req, res) => {
-        userDataBase.length = 0;
-        res.status(200).send(userDataBase)
+    updateName: (req, res) => {
+        let existingName = req.params.firstName
+        let newName = req.body.firstName
+        for (let i = 0; i < userDataBase.length; i++){
+            if (userDataBase[i].firstName === existingName) {
+                userDataBase[i].firstName = newName
+                console.log(userDataBase)
+                res.status(200).send('First Name Updated!!')
+        }
+     }
+    },
+    deleteName: (req, res) => {
+        let deleteUser = req.params.deleteInput
+        for(let i = 0; i < userDataBase.length; i++){
+            if(userDataBase[i].firstName === deleteUser){
+                userDataBase.splice([i], 1)
+                console.log(userDataBase)
+                res.status(200).send(`${deleteUser}, has been deleted from our records`)
+                return
+            }
+        }
     }
-
-    // addUserInfo: (req, res) => {
-    //     let {search, userName} = req.body
-    //     let newProperty = 
-
-    //     for(let i = 0; i < userDataBase.length; i++){
-    //         if(userDataBase[i].firstName === search){
-    //         userDataBase.
-    //         }
-    //     } 
-    // }
-
 }

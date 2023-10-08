@@ -3,10 +3,12 @@ const fortuneBtn = document.getElementById("fortuneBtn")
 const firstName = document.getElementById('firstName')
 const lastName = document.getElementById('lastName')
 const submitBtn = document.getElementById('submitBtn')
-const addUser = document.getElementById('addUser')
-const userName = document.getElementById('username')
-const search = document.getElementById('usersFirst')
+const updateBtn = document.getElementById('update')
+const existingFirstName = document.getElementById('existingFristName')
+const updatedFirstName = document.getElementById('newFirstName')
 const deleteBtn = document.getElementById('deleteBtn')
+const deleteInput = document.getElementById('deleteInput')
+
 
 
 const getCompliment = () => {
@@ -31,6 +33,7 @@ const submitInfo = (event) => {
     event.preventDefault()
     const firstName = document.getElementById('firstName')
     const lastName = document.getElementById('lastName')
+   
 
     let info = {
         firstName: firstName.value,
@@ -40,37 +43,48 @@ const submitInfo = (event) => {
     .then(res => {
 
         console.log(res.data)
-
     })
-
 }
 
-const addUserInfo = (event) => {
+
+
+// const existingFirstName = document.getElementById('existingFristName')
+// const updatedFirstName = document.getElementById('newFirstName')
+
+const updateName = (event) => {
     event.preventDefault()
-    let addedInfo = {
-        search: search.value,
-        userName: userName.value
+    let updatedName = {
+        firstName: updatedFirstName.value
     }
-    axios.put("http://localhost:4000/api/username/", addedInfo)
+
+    axios.put(`http://localhost:4000/api/submitInfo/${existingFirstName.value}`, updatedName)
+    .then(res => {
+        console.log(res.data)
+
+    })
+}
+
+
+const deleteName = (event) => {
+    event.preventDefault()
+
+
+    axios.delete(`http://localhost:4000/api/submitInfo/${deleteInput.value}`)
     .then(res => {
         console.log(res.data)
     })
 }
 
-const deleteUser = (event) => {
-    axios.delete("http://localhost:4000/api/delete/")
-    .then(res => {
-        alert('all gone')
-    })
-}
 
 
 
 
-addUser.addEventListener('click', addUserInfo)
-submitBtn.addEventListener('click', submitInfo)
-complimentBtn.addEventListener('click', getCompliment)
-fortuneBtn.addEventListener('click', getFortune)
+
+    deleteBtn.addEventListener('click', deleteName )
+    updateBtn.addEventListener('click', updateName)
+    submitBtn.addEventListener('click', submitInfo)
+    complimentBtn.addEventListener('click', getCompliment)
+    fortuneBtn.addEventListener('click', getFortune)
 
 
 
