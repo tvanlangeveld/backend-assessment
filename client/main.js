@@ -8,6 +8,7 @@ const existingFirstName = document.getElementById('existingFristName')
 const updatedFirstName = document.getElementById('newFirstName')
 const deleteBtn = document.getElementById('deleteBtn')
 const deleteInput = document.getElementById('deleteInput')
+const pageBody = document.querySelector('body')
 
 
 
@@ -41,8 +42,16 @@ const submitInfo = (event) => {
     }
     axios.post("http://localhost:4000/api/submitInfo/", info)
     .then(res => {
+            console.log(res.data)
 
-        console.log(res.data)
+            for(let i = 0; i < res.data.length; i++){
+                let customerInfo = document.createElement('p')
+                customerInfo.textContent = res.data[i].firstName
+                document.body.appendChild(customerInfo)
+        
+            }
+
+    
     })
 }
 
